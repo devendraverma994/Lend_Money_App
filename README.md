@@ -26,7 +26,7 @@ Things you may want to cover:
   - rails db:migrate
 
 * Start sidekiq server
- - bundle exec sidekiq
+  - bundle exec sidekiq
 
 * How to run the test suite
- - bundle exec rspec spec
+  - bundle exec rspec spec
