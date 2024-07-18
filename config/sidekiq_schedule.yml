@@ -1,0 +1,7 @@
+calculate_interest_job:
+  cron: "*/5 * * * *"
+  class: "CalculateInterestJob"
+
+loan_repayment_job:
+    cron: "*/5 * * * *"
+    class: "LoanRepaymentJob"

@@ -1,0 +1,44 @@
+<div class="container mt-5">
+  <h5 class="text-center">Loan Details</h5>
+
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <th>User:</th>
+        <td><%= @loan.user.username%></td>
+      </tr>
+      <tr>
+        <th>User Email ID:</th>
+        <td><%= @loan.user.email%></td>
+      </tr>
+      <tr>
+        <th>Admin:</th>
+        <td><%= @loan.admin.username %></td>
+      </tr>
+      <tr>
+        <th>Amount:</th>
+        <td><%= number_to_currency(@loan.amount, unit: '₹') %></td>
+      </tr>
+      <tr>
+        <th>Interest Rate:</th>
+        <td><%= number_with_precision(@loan.interest_rate * 100, precision: 2) %>%</td>
+      </tr>
+      <tr>
+        <th>Total Amount to be Repaid:</th>
+        <td><%= number_to_currency(@loan.total_repay_amount, unit: '₹') %></td>
+      </tr>
+      <tr>
+        <th>Status:</th>
+        <td><%= @loan.state.capitalize %></td>
+      </tr>
+      <tr>
+        <th>Created At:</th>
+        <td><%= @loan.created_at.strftime("%B %d, %Y %H:%M") %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-center">
+    <%= link_to 'Back to Loans', loans_path, class: 'btn btn-primary btn-sm' %>
+  </div>
+</div>

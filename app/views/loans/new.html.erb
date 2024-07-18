@@ -1,0 +1,30 @@
+
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="card p-4" style="width: 400px;">
+  <h5 class="text-center">New Loan</h5>
+
+<%= form_with(model: @loan, url: loans_path, class: 'form') do |form| %>
+  <% if @loan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@loan.errors.count, "error") %> prohibited this loan from being saved:</h2>
+
+      <ul>
+        <% @loan.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :amount, class: 'control-label' %>
+    <%= form.number_field :amount, class: 'form-control' %>
+  </div>
+
+  <div class="form-group text-center">
+    <%= form.submit 'Create Loan', class: 'btn btn-primary btn-sm mt-3' %>
+  </div>
+<% end %>
+  </div>
+</div>

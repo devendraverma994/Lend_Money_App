@@ -1,0 +1,65 @@
+<div class="mt-4 text-center">
+  <h5>All Loans</h5>
+
+  <% if current_user.user? %>
+    <%= link_to 'Request a Loan', new_loan_path, class: 'btn btn-primary btn-sm' %>
+  <% end %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Email ID</th>
+        <th>Amount</th>
+        <th>Interest(%)</th>
+        <% if current_user.user? %>
+          <th>Repaid Amount</th>
+        <% end %>
+        <th>Status</th>
+        <% if @loans.any? { |loan| loan.state != 'rejected' } %>
+          <th>Actions</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% active_loans = @loans.select { |loan| loan.state != 'closed' && loan.state != 'rejected' } %>
+      <% inactive_loans = @loans.select { |loan| loan.state == 'closed' || loan.state == 'rejected' } %>
+
+      <% active_loans.each do |loan| %>
+        <tr>
+          <td><%= loan.user.username %></td>
+          <td><%= loan.user.email %></td>
+          <td><%= number_to_currency(loan.amount, unit: '₹') %></td>
+          <td><%= number_with_precision(loan.interest_rate * 100, precision: 2) %></td>
+          <% if current_user.user? %>
+            <td><%= number_to_currency(loan.total_repay_amount, unit: '₹') %></td>
+          <% end %>
+          <td><%= loan.state.capitalize %></td>
+          <td>
+            <% case loan.state %>
+            <% when 'requested' %>
+              <%= render_loan_actions_for_requested(loan) %>
+            <% when 'approved' %>
+              <%= render_loan_actions_for_approved(loan) %>
+            <% when 'open' %>
+              <%= render_loan_actions_for_open(loan) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+
+      <% inactive_loans.each do |loan| %>
+        <tr>
+          <td><%= loan.user.username %></td>
+          <td><%= loan.user.email %></td>
+          <td><%= number_to_currency(loan.amount, unit: '₹') %></td>
+          <td><%= number_with_precision(loan.interest_rate * 100, precision: 2) %></td>
+          <% if current_user.user? %>
+            <td><%= number_to_currency(loan.total_repay_amount, unit: '₹') %></td>
+          <% end %>
+          <td><%= loan.state.capitalize %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
